@@ -1,0 +1,162 @@
+/*Esto es un visaje todo raro, se supone que es para que formatee todos los estilos, pero solo dentro del body*/
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+
+/* Variables CSS para el tamaño de las celdas y de las marcas o simbolos */
+
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+
+/* Estilo que se aplica a todas las etiquetas en el body */
+
+body {
+    margin: 0;
+}
+
+
+/* Estilo para el tablero completo de las 9 casillas */
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+    /* divide el tablero de cajas verticales en grupos de 3 */
+}
+
+
+/*Estilo para cada una de las celdas*/
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    /*Mostrar el contenido de las celdas creadas mas abajo para X y circle:*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+
+/*Organizacion del estilo de los bordes del tablero*/
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+
+/*Cambio de cursor para las celdas rellenas*/
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after {
+    background-color: black;
+}
+
+
+/*Comportamiento cuando se hace hover sobre alguna celda vacia
+Primero se selecciona board cuando esta aplicando la celda 'x'
+y se seleccionan las celdas del tablero cuando se hace hover*/
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    background-color: lightgray;
+}
+
+
+/* Estilo para las celdas con X,
+before y after son dos elementos para formar la X */
+
+.cell.x::before,
+.cell.x::after,
+
+/*Se selecciona este comportamiento tambien para formar la figura cuando se hace hover
+creando reglas para que no tome las celdas donde hay circulos o X*/
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    /* Hace que las celdas se alineen en posicion absoluta, fuera del doc flow */
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(-45deg);
+}
+
+
+/*Estilo para las celdas del circulo*/
+
+.cell.circle::before,
+.cell.circle::after {
+    background-color: black;
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    background-color: lightgray;
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
