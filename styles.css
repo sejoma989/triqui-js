@@ -151,7 +151,7 @@ creando reglas para que no tome las celdas donde hay circulos o X*/
 .cell.cell.circle::before,
 .board.circle .cell:not(.x):not(.circle):hover::before {
     width: var(--mark-size);
-    height: var(--mark-sizen);
+    height: var(--mark-size);
 }
 
 .cell.cell.circle::after,
