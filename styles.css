@@ -83,7 +83,8 @@ body {
 }
 
 .cell.x::before,
-.cell.x::after {
+.cell.x::after,
+.cell.circle::before {
     background-color: black;
 }
 
@@ -93,7 +94,8 @@ Primero se selecciona board cuando esta aplicando la celda 'x'
 y se seleccionan las celdas del tablero cuando se hace hover*/
 
 .board.x .cell:not(.x):not(.circle):hover::before,
-.board.x .cell:not(.x):not(.circle):hover::after {
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
     background-color: lightgray;
 }
 
@@ -128,16 +130,6 @@ creando reglas para que no tome las celdas donde hay circulos o X*/
 
 
 /*Estilo para las celdas del circulo*/
-
-.cell.circle::before,
-.cell.circle::after {
-    background-color: black;
-}
-
-.board.circle .cell:not(.x):not(.circle):hover::before,
-.board.circle .cell:not(.x):not(.circle):hover::after {
-    background-color: lightgray;
-}
 
 .cell.circle::before,
 .cell.circle::after,
@@ -188,7 +180,6 @@ creando reglas para que no tome las celdas donde hay circulos o X*/
     background-color: black;
     border-color: whitesmoke;
     color: white;
-    cursor: pointer;
 }
 
 .winning-message.show {

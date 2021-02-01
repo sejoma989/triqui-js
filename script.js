@@ -17,6 +17,10 @@ const WINNING_COMBINATIONS = [
 const cellElements = document.querySelectorAll('[data-cell]')
     //board contiene los elementos del tablero por id (1 - 9)
 const board = document.getElementById('board')
+    //Contiene los elementos del modal del mensaje ganador
+const winningMessageElement = document.getElementById('winningMessage')
+    //Selecciona el selector usado en la linea 30 de index para definir el mensaje con el ganador, si es x o O
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 
 
 //Si circleTurn es true, es turno de circulo, si es false, turno de X
@@ -26,35 +30,37 @@ startGame()
 
 //funcion que arranca el juego para que comience con setBoardHoverClass
 function startGame() {
-    circleTurn = false
+    circleTurn = true
     cellElements.forEach(cell => {
-        //Escucha un solo evento de click en cada celda, solo uno
-        cell.addEventListener('click', handleClick, { once: true })
-    });
+        cell.addEventListener('click', handleClick, { once: true }) //Escucha un solo evento de click en cada celda, solo uno
+    })
     setBoardHoverClass()
 }
-
-
 
 function handleClick(e) {
     //Obtener la informacion de la celda clickeada, decide de quien es el turno
     const cell = e.target
     const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
-        //poner Marca
-    placeMark(cell, currentClass)
-        //comprobar Ganador
-    if (checkWin(currentClass)) {
+    placeMark(cell, currentClass) //poner Marca        
+    if (checkWin(currentClass)) { //comprobar Ganador
         endGame(false)
+    } else if (isDraw()) { //comprobar Empate
+        endGame(true)
+    } else {
+        console.log("Estoy entrando aca")
+        swapTurns() //cambiar Turno
+        setBoardHoverClass() //Pone las marcas al hacer hover
     }
-    //comprobar Empate
-    //cambiar Turno
-    swapTurns()
-        //Pone las marcas al hacer hover
-    setBoardHoverClass()
 }
 
-function endGame() {
-    
+
+function endGame(draw) {
+    if (draw) {
+
+    } else {
+        winningMessageTextElement.innerHTML = `${circleTurn ? "O" : "X"} Gana!`
+    }
+    winningMessageElement.classList.add('show')
 }
 
 function placeMark(cell, currentClass) {
@@ -73,10 +79,13 @@ function setBoardHoverClass() {
     } else {
         board.classList.add(X_CLASS)
     }
-
 }
 
-//Funcion que compara segun el turno para todos los array combinaciones para ganar, si alguna de ellas tiene todos los index iguales
+function isDraw() {
+
+}
+//Funcion que compara segun el turno para todos los array combinaciones para ganar, 
+//si alguna de ellas tiene todos los index de la misma clase
 function checkWin(currentClass) {
     return WINNING_COMBINATIONS.some(combination => {
         return combination.every(index => {
