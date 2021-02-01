@@ -6,6 +6,16 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
 
 /* Variables CSS para el tamaño de las celdas y de las marcas o simbolos */
 
